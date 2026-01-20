@@ -1,4 +1,3 @@
-// update
 import React, { useState, useEffect } from 'react';
 import { 
   Search, ShoppingCart, User, Bell, Menu, X, Filter, 
@@ -864,7 +863,7 @@ const CheckoutModal = ({ isOpen, onClose, cartItems, total, onConfirm }) => {
 
 const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNotiClick, showNoti }) => (
   <nav className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm font-sans">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between h-16 items-center">
         {/* Logo */}
         <div className="flex items-center cursor-pointer" onClick={() => onViewChange('home')}>
@@ -875,7 +874,7 @@ const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNo
         </div>
 
         {/* Search Bar - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-lg mx-8 relative">
+        <div className="hidden md:flex flex-1 max-w-2xl mx-8 relative">
           <input
             type="text"
             placeholder="ค้นหาสินค้า แบรนด์ หรือประเภท..."
@@ -931,7 +930,7 @@ const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNo
 
 const HeroSection = ({ onCategoryClick, selectedCategory }) => (
   <div className="bg-gradient-to-r from-slate-50 to-gray-100 py-12 border-b border-gray-200">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="text-center">
         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">
           ส่งต่อของรัก ในบ้านหลังที่สอง
@@ -950,7 +949,7 @@ const HeroSection = ({ onCategoryClick, selectedCategory }) => (
       </div>
       
       {/* Quick Categories */}
-      <div className="mt-12 grid grid-cols-4 md:grid-cols-8 gap-4 text-center">
+      <div className="mt-12 grid grid-cols-4 md:grid-cols-8 gap-4 text-center max-w-7xl mx-auto">
         {CATEGORIES.map((cat) => (
           <div 
             key={cat.id} 
@@ -1091,12 +1090,12 @@ const ProductCard = ({ product, onClick }) => (
 );
 
 const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+  <div className="w-full px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
     <button onClick={onBack} className="flex items-center text-sm text-gray-500 hover:text-slate-800 mb-6 transition">
       <ChevronRight className="rotate-180 mr-1" size={16} /> กลับไปหน้ารายการ
     </button>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-[1600px] mx-auto">
       {/* Image Gallery */}
       <div className="space-y-4">
         <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
@@ -1218,7 +1217,7 @@ const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
 );
 
 const UserProfile = () => (
-  <div className="max-w-5xl mx-auto px-4 py-8">
+  <div className="w-full max-w-7xl mx-auto px-4 py-8">
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
       <div className="h-32 bg-slate-800"></div>
       <div className="px-8 pb-8 relative">
@@ -1255,7 +1254,7 @@ const UserProfile = () => (
         </div>
       </div>
     </div>
-
+{/* ... existing code ... */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="col-span-1">
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-2">
@@ -1301,7 +1300,7 @@ const UserProfile = () => (
 
 const Footer = () => (
   <footer className="bg-white border-t border-gray-200 pt-16 pb-8 mt-12 text-sm font-light">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
         <div>
           <h4 className="font-bold text-slate-800 mb-4">SecondHome</h4>
@@ -1514,7 +1513,7 @@ export default function SecondHomeApp() {
             onCategoryClick={handleCategoryClick} 
             selectedCategory={selectedCategory} 
           />
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <main className="w-full px-4 sm:px-6 lg:px-8 py-12">
             <div className="flex">
               <FilterSidebar 
                 onCategoryClick={handleCategoryClick} 
@@ -1549,7 +1548,7 @@ export default function SecondHomeApp() {
                 </div>
                 
                 {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
                     {filteredProducts.map(product => (
                       <ProductCard 
                         key={product.id} 
