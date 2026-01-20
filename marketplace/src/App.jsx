@@ -4,7 +4,7 @@ import {
   MapPin, Star, Heart, Share2, MessageCircle, ShieldCheck, 
   Truck, CreditCard, ChevronRight, Home, HelpCircle, 
   Settings, LogOut, TrendingUp, DollarSign, ArrowLeft,
-  Plus, Minus, Trash2, CheckCircle, AlertCircle, SlidersHorizontal
+  Plus, Minus, Trash2, CheckCircle, AlertCircle
 } from 'lucide-react';
 
 // --- Mock Data (Expanded to 50+ items) ---
@@ -766,80 +766,6 @@ const CartDrawer = ({ isOpen, onClose, cartItems, onRemove, onCheckout, total })
   </>
 );
 
-// --- Mobile Filter Modal ---
-const MobileFilterModal = ({ isOpen, onClose, selectedCategory, onCategoryClick }) => (
-  <>
-    {isOpen && <div className="fixed inset-0 bg-black/40 z-50 backdrop-blur-sm" onClick={onClose}></div>}
-    <div className={`fixed inset-x-0 bottom-0 max-h-[85vh] bg-white z-50 rounded-t-2xl transform transition-transform duration-300 shadow-2xl overflow-hidden flex flex-col ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}>
-      <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-        <h3 className="font-bold text-gray-800 text-lg flex items-center">
-          <Filter size={20} className="mr-2" /> ตัวกรอง
-        </h3>
-        <button onClick={onClose} className="p-2 hover:bg-gray-200 rounded-full transition"><X size={20} /></button>
-      </div>
-      
-      <div className="overflow-y-auto p-4 flex-1">
-        {/* Same Filter Logic as Sidebar but optimized for mobile touch */}
-        <div className="mb-6">
-          <h4 className="font-medium text-gray-700 mb-3 text-sm">หมวดหมู่</h4>
-          <div className="flex flex-wrap gap-2">
-            <div 
-              className={`cursor-pointer text-sm py-2 px-4 rounded-full border ${!selectedCategory ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-gray-600 border-gray-200'}`}
-              onClick={() => { onCategoryClick(null); onClose(); }}
-            >
-              ทั้งหมด
-            </div>
-            {CATEGORIES.map(cat => (
-              <div 
-                key={cat.id}
-                className={`cursor-pointer text-sm py-2 px-4 rounded-full border ${selectedCategory === cat.name ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-gray-600 border-gray-200'}`}
-                onClick={() => { onCategoryClick(cat.name); onClose(); }}
-              >
-                {cat.name}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="font-medium text-gray-700 mb-3 text-sm">สภาพสินค้า</h4>
-          <div className="space-y-3">
-            {['ใหม่แกะกล่อง', 'มือสองสภาพดี', 'มีตำหนิเล็กน้อย', 'งานช่าง/อะไหล่'].map((item) => (
-              <label key={item} className="flex items-center space-x-3 cursor-pointer">
-                <input type="checkbox" className="w-5 h-5 rounded text-slate-800 focus:ring-slate-500 border-gray-300" />
-                <span className="text-gray-600">{item}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="font-medium text-gray-700 mb-3 text-sm">ช่วงราคา</h4>
-          <div className="flex items-center space-x-2 mb-2">
-            <input type="number" placeholder="ต่ำสุด" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-slate-500" />
-            <span className="text-gray-400">-</span>
-            <input type="number" placeholder="สูงสุด" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-slate-500" />
-          </div>
-        </div>
-
-        <div className="mb-8">
-          <h4 className="font-medium text-gray-700 mb-3 text-sm">สถานที่</h4>
-          <div className="relative">
-            <MapPin size={18} className="absolute left-3 top-3.5 text-gray-400" />
-            <input type="text" placeholder="ระบุจังหวัด..." className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-slate-500" />
-          </div>
-        </div>
-      </div>
-
-      <div className="p-4 border-t border-gray-100 bg-white">
-        <button onClick={onClose} className="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-lg">
-          ดูผลลัพธ์
-        </button>
-      </div>
-    </div>
-  </>
-);
-
 const CheckoutModal = ({ isOpen, onClose, cartItems, total, onConfirm }) => {
   const [step, setStep] = useState(1); // 1: Summary, 2: Processing, 3: Success
   
@@ -935,16 +861,16 @@ const CheckoutModal = ({ isOpen, onClose, cartItems, total, onConfirm }) => {
   );
 };
 
-const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNotiClick, showNoti, onSearchMobile }) => (
+const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNotiClick, showNoti }) => (
   <nav className="sticky top-0 z-40 bg-white border-b border-gray-100 shadow-sm font-sans">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between h-16 items-center">
         {/* Logo */}
         <div className="flex items-center cursor-pointer" onClick={() => onViewChange('home')}>
-          <div className="bg-slate-800 text-white p-1.5 md:p-2 rounded-lg mr-2">
-            <Home size={18} className="md:w-5 md:h-5" />
+          <div className="bg-slate-800 text-white p-2 rounded-lg mr-2">
+            <Home size={20} />
           </div>
-          <span className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">SecondHome</span>
+          <span className="text-2xl font-bold text-slate-800 tracking-tight">SecondHome</span>
         </div>
 
         {/* Search Bar - Desktop */}
@@ -961,22 +887,13 @@ const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNo
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center space-x-1 md:space-x-4">
-          
-          {/* Mobile Search Toggle */}
-          <button 
-            className="md:hidden text-gray-500 hover:text-slate-800 p-2 rounded-full hover:bg-gray-100"
-            onClick={onSearchMobile}
-          >
-            <Search size={20} />
-          </button>
-
+        <div className="flex items-center space-x-4">
           <div className="relative">
             <button 
               className={`text-gray-500 hover:text-slate-800 transition p-2 rounded-full hover:bg-gray-100 ${showNoti ? 'bg-gray-100 text-slate-800' : ''}`}
               onClick={onNotiClick}
             >
-              <Bell size={20} className="md:w-[22px] md:h-[22px]" />
+              <Bell size={22} />
               <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center border border-white">3</span>
             </button>
             {showNoti && <NotificationDropdown onClose={onNotiClick} />}
@@ -986,21 +903,21 @@ const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNo
             className="text-gray-500 hover:text-slate-800 transition relative p-2 rounded-full hover:bg-gray-100"
             onClick={onCartClick}
           >
-            <ShoppingCart size={20} className="md:w-[22px] md:h-[22px]" />
+            <ShoppingCart size={22} />
             {cartCount > 0 && (
               <span className="absolute top-1 right-1 bg-slate-800 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center border border-white animate-bounce-short">{cartCount}</span>
             )}
           </button>
           
           {user ? (
-            <div className="flex items-center space-x-2 cursor-pointer md:border-l md:pl-4 border-gray-200" onClick={() => onViewChange('profile')}>
+            <div className="flex items-center space-x-2 cursor-pointer border-l pl-4 border-gray-200" onClick={() => onViewChange('profile')}>
               <img src={user.avatar} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
               <span className="text-sm font-medium text-gray-700 hidden sm:block">{user.name}</span>
             </div>
           ) : (
             <button 
               onClick={onLoginClick}
-              className="bg-slate-800 text-white px-3 py-1.5 md:px-5 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-slate-700 transition shadow-sm ml-1"
+              className="bg-slate-800 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-slate-700 transition shadow-sm"
             >
               เข้าสู่ระบบ
             </button>
@@ -1012,37 +929,37 @@ const Navbar = ({ onViewChange, cartCount, user, onLoginClick, onCartClick, onNo
 );
 
 const HeroSection = ({ onCategoryClick, selectedCategory }) => (
-  <div className="bg-gradient-to-r from-slate-50 to-gray-100 py-8 md:py-12 border-b border-gray-200">
+  <div className="bg-gradient-to-r from-slate-50 to-gray-100 py-12 border-b border-gray-200">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center">
-        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-800 mb-3 md:mb-4 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">
           ส่งต่อของรัก ในบ้านหลังที่สอง
         </h1>
-        <p className="text-sm md:text-lg text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto font-light px-4">
+        <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto font-light">
           แหล่งรวมสินค้ามือสองคุณภาพดี ตรวจสอบได้ ปลอดภัยทุกการซื้อขาย พร้อมระบบการันตีความพึงพอใจ
         </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 px-8 sm:px-0">
-          <button className="bg-slate-800 text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium hover:bg-slate-700 transition shadow-lg flex items-center justify-center text-sm md:text-base">
+        <div className="flex justify-center gap-4">
+          <button className="bg-slate-800 text-white px-8 py-3 rounded-full font-medium hover:bg-slate-700 transition shadow-lg flex items-center">
             ลงขายสินค้าฟรี <ChevronRight size={18} className="ml-1" />
           </button>
-          <button className="bg-white text-slate-800 border border-gray-200 px-6 md:px-8 py-2.5 md:py-3 rounded-full font-medium hover:bg-gray-50 transition shadow-sm text-sm md:text-base">
+          <button className="bg-white text-slate-800 border border-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-50 transition shadow-sm">
             โหมดมือใหม่
           </button>
         </div>
       </div>
       
       {/* Quick Categories */}
-      <div className="mt-8 md:mt-12 grid grid-cols-4 md:grid-cols-8 gap-3 md:gap-4 text-center">
+      <div className="mt-12 grid grid-cols-4 md:grid-cols-8 gap-4 text-center">
         {CATEGORIES.map((cat) => (
           <div 
             key={cat.id} 
             className="group cursor-pointer"
             onClick={() => onCategoryClick(cat.name)}
           >
-            <div className={`w-12 h-12 md:w-14 md:h-14 mx-auto rounded-2xl shadow-sm flex items-center justify-center text-xl md:text-2xl transition-all duration-200 border ${selectedCategory === cat.name ? 'bg-slate-800 text-white scale-110 ring-2 ring-offset-2 ring-slate-300' : 'bg-white border-gray-100 group-hover:scale-110 group-hover:border-slate-300'}`}>
+            <div className={`w-14 h-14 mx-auto rounded-2xl shadow-sm flex items-center justify-center text-2xl transition-all duration-200 border ${selectedCategory === cat.name ? 'bg-slate-800 text-white scale-110 ring-2 ring-offset-2 ring-slate-300' : 'bg-white border-gray-100 group-hover:scale-110 group-hover:border-slate-300'}`}>
               {cat.icon}
             </div>
-            <p className={`mt-2 text-[10px] md:text-xs font-medium truncate px-1 ${selectedCategory === cat.name ? 'text-slate-800 font-bold' : 'text-gray-600 group-hover:text-slate-800'}`}>
+            <p className={`mt-2 text-xs font-medium truncate px-1 ${selectedCategory === cat.name ? 'text-slate-800 font-bold' : 'text-gray-600 group-hover:text-slate-800'}`}>
               {cat.name}
             </p>
           </div>
@@ -1143,53 +1060,48 @@ const ProductCard = ({ product, onClick }) => (
         <Heart size={16} />
       </button>
     </div>
-    <div className="p-3 md:p-4">
+    <div className="p-4">
       <div className="flex justify-between items-start mb-1">
-        <h3 className="font-medium text-gray-900 line-clamp-2 text-xs md:text-sm leading-snug h-8 md:h-10">{product.title}</h3>
+        <h3 className="font-medium text-gray-900 line-clamp-2 text-sm leading-snug h-10">{product.title}</h3>
       </div>
-      <div className="flex flex-wrap items-baseline gap-1 md:gap-2 mb-1 md:mb-2">
-        <span className="text-base md:text-lg font-bold text-slate-800">฿{product.price.toLocaleString()}</span>
+      <div className="flex items-baseline space-x-2 mb-2">
+        <span className="text-lg font-bold text-slate-800">฿{product.price.toLocaleString()}</span>
         {product.originalPrice > product.price && (
-          <span className="text-[10px] md:text-xs text-gray-400 line-through">฿{product.originalPrice.toLocaleString()}</span>
+          <span className="text-xs text-gray-400 line-through">฿{product.originalPrice.toLocaleString()}</span>
         )}
       </div>
-      <div className="flex items-center text-[10px] md:text-xs text-gray-500 mb-2 md:mb-3 gap-1 md:gap-2">
-        <span className="flex items-center truncate max-w-[60px] md:max-w-none"><MapPin size={10} className="mr-0.5" />{product.location.split(',')[0]}</span>
-        <span className="hidden md:inline w-1 h-1 bg-gray-300 rounded-full"></span>
-        <span className="truncate hidden md:inline">{product.condition}</span>
+      <div className="flex items-center text-xs text-gray-500 mb-3 space-x-2">
+        <span className="flex items-center"><MapPin size={10} className="mr-0.5" />{product.location.split(',')[0]}</span>
+        <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+        <span className="truncate">{product.condition}</span>
       </div>
-      <div className="flex items-center justify-between pt-2 md:pt-3 border-t border-gray-50">
+      <div className="flex items-center justify-between pt-3 border-t border-gray-50">
         <div className="flex items-center space-x-1.5">
-          <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-slate-200 flex items-center justify-center text-[8px] md:text-[10px] text-slate-600 font-bold">
+          <div className="w-5 h-5 rounded-full bg-slate-200 flex items-center justify-center text-[10px] text-slate-600 font-bold">
             {product.seller.charAt(0)}
           </div>
-          <span className="text-[10px] md:text-xs text-gray-600 truncate max-w-[60px] md:max-w-[80px]">{product.seller}</span>
-          {product.sellerVerified && <ShieldCheck size={10} className="text-blue-500 md:w-3 md:h-3" />}
+          <span className="text-xs text-gray-600 truncate max-w-[80px]">{product.seller}</span>
+          {product.sellerVerified && <ShieldCheck size={12} className="text-blue-500" />}
         </div>
-        <div className="hidden md:block">
-           <StarRating rating={product.rating} />
-        </div>
-        <div className="md:hidden flex items-center text-yellow-400 text-[10px]">
-           <Star size={10} fill="currentColor" /> <span className="ml-0.5 text-gray-500">{product.rating}</span>
-        </div>
+        <StarRating rating={product.rating} />
       </div>
     </div>
   </div>
 );
 
 const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8 animate-fade-in pb-24 md:pb-8">
-    <button onClick={onBack} className="flex items-center text-sm text-gray-500 hover:text-slate-800 mb-4 md:mb-6 transition">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+    <button onClick={onBack} className="flex items-center text-sm text-gray-500 hover:text-slate-800 mb-6 transition">
       <ChevronRight className="rotate-180 mr-1" size={16} /> กลับไปหน้ารายการ
     </button>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
       {/* Image Gallery */}
-      <div className="space-y-3 md:space-y-4">
+      <div className="space-y-4">
         <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden border border-gray-100">
           <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
         </div>
-        <div className="grid grid-cols-4 gap-2 md:gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className={`aspect-square rounded-lg overflow-hidden border cursor-pointer ${i === 0 ? 'border-slate-800 ring-1 ring-slate-800' : 'border-gray-100 hover:border-gray-300'}`}>
               <img src={product.image} alt="thumbnail" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition" />
@@ -1202,41 +1114,41 @@ const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
       <div>
         <div className="flex justify-between items-start">
           <div>
-            <div className="flex flex-wrap gap-2 mb-2 md:mb-3">
+            <div className="flex space-x-2 mb-3">
               {product.tags.map(tag => (
                 <Badge key={tag} color="bg-blue-50 text-blue-700">{tag}</Badge>
               ))}
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{product.title}</h1>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-gray-500 mb-4 md:mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.title}</h1>
+            <div className="flex items-center space-x-4 text-sm text-gray-500 mb-6">
               <span className="flex items-center"><MapPin size={14} className="mr-1" /> {product.location}</span>
               <span className="flex items-center text-slate-600 font-medium">
                 {product.condition}
               </span>
-              <span className="text-gray-300 hidden md:inline">|</span>
+              <span className="text-gray-300">|</span>
               <span className="text-xs">ลงขายเมื่อ 2 ชม. ที่แล้ว</span>
             </div>
           </div>
           <div className="flex space-x-2">
-            <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-500"><Share2 size={18} className="md:w-5 md:h-5" /></button>
-            <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50 text-red-500"><Heart size={18} className="md:w-5 md:h-5" /></button>
+            <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-500"><Share2 size={20} /></button>
+            <button className="p-2 rounded-full border border-gray-200 hover:bg-gray-50 text-red-500"><Heart size={20} /></button>
           </div>
         </div>
 
-        <div className="bg-gray-50 p-4 md:p-6 rounded-2xl mb-6 md:mb-8 border border-gray-100">
+        <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-100">
           <div className="flex items-baseline justify-between mb-4">
-            <div className="flex items-baseline space-x-2 md:space-x-3">
-              <span className="text-3xl md:text-4xl font-bold text-slate-800">฿{product.price.toLocaleString()}</span>
+            <div className="flex items-baseline space-x-3">
+              <span className="text-4xl font-bold text-slate-800">฿{product.price.toLocaleString()}</span>
               {product.originalPrice && (
-                <span className="text-sm md:text-lg text-gray-400 line-through">฿{product.originalPrice.toLocaleString()}</span>
+                <span className="text-lg text-gray-400 line-through">฿{product.originalPrice.toLocaleString()}</span>
               )}
             </div>
-            <span className="text-green-600 text-xs md:text-sm font-medium flex items-center bg-green-50 px-2 py-1 rounded">
-              <TrendingUp size={14} className="mr-1" /> คุ้มค่ามาก
+            <span className="text-green-600 text-sm font-medium flex items-center bg-green-50 px-2 py-1 rounded">
+              <TrendingUp size={14} className="mr-1" /> ราคาดีกว่าตลาด 10%
             </span>
           </div>
           
-          <div className="hidden md:flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button 
               onClick={() => onBuyNow(product)}
               className="flex-1 bg-slate-800 text-white py-3.5 rounded-xl font-medium hover:bg-slate-700 transition shadow-lg flex items-center justify-center space-x-2"
@@ -1252,38 +1164,22 @@ const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
           </div>
         </div>
 
-        {/* Mobile Sticky Action Bar */}
-        <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 p-4 z-30 flex gap-3 shadow-top safe-area-bottom">
-           <button 
-              onClick={() => onAddToCart(product)}
-              className="flex-1 bg-gray-100 text-slate-800 py-3 rounded-xl font-bold flex items-center justify-center"
-            >
-              <ShoppingCart size={20} />
-            </button>
-            <button 
-              onClick={() => onBuyNow(product)}
-              className="flex-[3] bg-slate-800 text-white py-3 rounded-xl font-bold shadow-lg flex items-center justify-center"
-            >
-              ซื้อเลย ฿{product.price.toLocaleString()}
-            </button>
-        </div>
-
         {/* Description */}
-        <div className="mb-6 md:mb-8">
-          <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2 md:mb-3">รายละเอียดสินค้า</h3>
-          <p className="text-sm md:text-base text-gray-600 leading-relaxed whitespace-pre-line">{product.description}</p>
+        <div className="mb-8">
+          <h3 className="text-lg font-bold text-gray-900 mb-3">รายละเอียดสินค้า</h3>
+          <p className="text-gray-600 leading-relaxed whitespace-pre-line">{product.description}</p>
         </div>
 
         {/* Guarantee & Safety */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
-          <div className="border border-gray-100 p-3 md:p-4 rounded-xl flex items-start space-x-3">
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <div className="border border-gray-100 p-4 rounded-xl flex items-start space-x-3">
             <div className="bg-green-100 p-2 rounded-lg text-green-600"><ShieldCheck size={20} /></div>
             <div>
               <h4 className="font-bold text-sm text-gray-900">รับประกันคืนเงิน</h4>
               <p className="text-xs text-gray-500 mt-1">คืนเงินเต็มจำนวนหากสินค้าไม่ตรงปก</p>
             </div>
           </div>
-          <div className="border border-gray-100 p-3 md:p-4 rounded-xl flex items-start space-x-3">
+          <div className="border border-gray-100 p-4 rounded-xl flex items-start space-x-3">
             <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><Truck size={20} /></div>
             <div>
               <h4 className="font-bold text-sm text-gray-900">จัดส่งปลอดภัย</h4>
@@ -1293,25 +1189,25 @@ const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
         </div>
 
         {/* Seller Info */}
-        <div className="border-t border-gray-100 pt-6 md:pt-8">
+        <div className="border-t border-gray-100 pt-8">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-3 md:space-x-4">
-              <div className="w-12 h-12 md:w-14 md:h-14 bg-slate-200 rounded-full flex items-center justify-center text-lg md:text-xl font-bold text-slate-600">
+            <div className="flex items-center space-x-4">
+              <div className="w-14 h-14 bg-slate-200 rounded-full flex items-center justify-center text-xl font-bold text-slate-600">
                 {product.seller.charAt(0)}
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 flex items-center text-sm md:text-base">
+                <h3 className="font-bold text-gray-900 flex items-center">
                   {product.seller}
                   {product.sellerVerified && <ShieldCheck size={16} className="text-blue-500 ml-1" title="ยืนยันตัวตนแล้ว" />}
                 </h3>
-                <div className="flex items-center text-xs md:text-sm text-gray-500 space-x-2">
+                <div className="flex items-center text-sm text-gray-500 space-x-2">
                   <StarRating rating={product.rating} />
                   <span>({product.reviews} รีวิว)</span>
                 </div>
               </div>
             </div>
-            <button className="border border-gray-200 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-gray-50 transition flex items-center">
-              <MessageCircle size={16} className="mr-1 md:mr-2" /> แชทเลย
+            <button className="border border-gray-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition flex items-center">
+              <MessageCircle size={16} className="mr-2" /> แชทกับผู้ขาย
             </button>
           </div>
         </div>
@@ -1321,39 +1217,39 @@ const ProductDetail = ({ product, onBack, onAddToCart, onBuyNow }) => (
 );
 
 const UserProfile = () => (
-  <div className="max-w-5xl mx-auto px-4 py-6 md:py-8">
+  <div className="max-w-5xl mx-auto px-4 py-8">
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
-      <div className="h-24 md:h-32 bg-slate-800"></div>
-      <div className="px-4 md:px-8 pb-6 md:pb-8 relative">
-        <div className="flex flex-col sm:flex-row items-end -mt-10 md:-mt-12 mb-6 sm:space-x-6">
-          <div className="w-20 h-20 md:w-24 md:h-24 bg-white p-1 rounded-full">
+      <div className="h-32 bg-slate-800"></div>
+      <div className="px-8 pb-8 relative">
+        <div className="flex flex-col sm:flex-row items-end -mt-12 mb-6 sm:space-x-6">
+          <div className="w-24 h-24 bg-white p-1 rounded-full">
             <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200" alt="User" className="w-full h-full rounded-full object-cover bg-gray-200" />
           </div>
-          <div className="mt-3 sm:mt-0 flex-1 text-center sm:text-left">
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900">Pongsatorn Dev</h1>
-            <p className="text-gray-500 text-xs md:text-sm">สมาชิกตั้งแต่ 2023 • เชียงใหม่, ไทย</p>
+          <div className="mt-4 sm:mt-0 flex-1">
+            <h1 className="text-2xl font-bold text-gray-900">Pongsatorn Dev</h1>
+            <p className="text-gray-500 text-sm">สมาชิกตั้งแต่ 2023 • เชียงใหม่, ไทย</p>
           </div>
-          <button className="mt-4 sm:mt-0 bg-slate-800 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-medium hover:bg-slate-700 w-full sm:w-auto">
+          <button className="mt-4 sm:mt-0 bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-700">
             แก้ไขโปรไฟล์
           </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-gray-100 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 border-t border-gray-100 pt-6">
           <div className="text-center">
-            <div className="text-lg md:text-xl font-bold text-gray-900">4.9</div>
-            <div className="text-[10px] md:text-xs text-gray-500">คะแนนผู้ซื้อ</div>
+            <div className="text-xl font-bold text-gray-900">4.9</div>
+            <div className="text-xs text-gray-500">คะแนนผู้ซื้อ</div>
           </div>
           <div className="text-center border-l border-gray-100">
-            <div className="text-lg md:text-xl font-bold text-gray-900">12</div>
-            <div className="text-[10px] md:text-xs text-gray-500">ซื้อสำเร็จ</div>
+            <div className="text-xl font-bold text-gray-900">12</div>
+            <div className="text-xs text-gray-500">ซื้อสำเร็จ</div>
           </div>
-          <div className="text-center md:border-l border-gray-100 pt-4 md:pt-0 border-t md:border-t-0 col-span-1">
-            <div className="text-lg md:text-xl font-bold text-gray-900">0</div>
-            <div className="text-[10px] md:text-xs text-gray-500">กำลังจัดส่ง</div>
+          <div className="text-center border-l border-gray-100">
+            <div className="text-xl font-bold text-gray-900">0</div>
+            <div className="text-xs text-gray-500">กำลังจัดส่ง</div>
           </div>
-          <div className="text-center border-l border-gray-100 pt-4 md:pt-0 border-t md:border-t-0 col-span-1">
-            <div className="text-lg md:text-xl font-bold text-gray-900">฿1,200</div>
-            <div className="text-[10px] md:text-xs text-gray-500">คูปองส่วนลด</div>
+          <div className="text-center border-l border-gray-100">
+            <div className="text-xl font-bold text-gray-900">฿1,200</div>
+            <div className="text-xs text-gray-500">คูปองส่วนลด</div>
           </div>
         </div>
       </div>
@@ -1364,35 +1260,35 @@ const UserProfile = () => (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-2">
           {['ภาพรวมบัญชี', 'รายการสั่งซื้อ', 'สินค้าที่ลงขาย', 'รายการโปรด', 'การตั้งค่า'].map((menu, i) => (
             <div key={menu} className={`p-3 rounded-lg cursor-pointer flex items-center justify-between ${i === 0 ? 'bg-slate-50 text-slate-800 font-medium' : 'text-gray-600 hover:bg-gray-50'}`}>
-              <span className="text-sm md:text-base">{menu}</span>
+              <span>{menu}</span>
               <ChevronRight size={16} className="text-gray-400" />
             </div>
           ))}
           <div className="border-t border-gray-100 mt-2 pt-2">
             <div className="p-3 rounded-lg cursor-pointer text-red-500 hover:bg-red-50 flex items-center space-x-2">
-              <LogOut size={16} /> <span className="text-sm md:text-base">ออกจากระบบ</span>
+              <LogOut size={16} /> <span>ออกจากระบบ</span>
             </div>
           </div>
         </div>
       </div>
       
       <div className="col-span-2 space-y-6">
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 md:p-6">
-          <h3 className="font-bold text-gray-900 mb-4 text-sm md:text-base">สถานะการสั่งซื้อล่าสุด</h3>
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+          <h3 className="font-bold text-gray-900 mb-4">สถานะการสั่งซื้อล่าสุด</h3>
           <div className="space-y-4">
-            <div className="flex items-center p-3 md:p-4 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="p-2 md:p-3 bg-white rounded-md border border-gray-200 mr-3 md:mr-4">
-                <Truck size={20} className="text-blue-500 md:w-6 md:h-6" />
+            <div className="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="p-3 bg-white rounded-md border border-gray-200 mr-4">
+                <Truck size={24} className="text-blue-500" />
               </div>
               <div className="flex-1">
                 <div className="flex justify-between mb-1">
-                  <span className="font-medium text-gray-900 text-xs md:text-sm line-clamp-1 mr-2">หูฟัง Sony WH-1000XM4</span>
-                  <span className="text-xs text-blue-600 font-medium whitespace-nowrap">กำลังจัดส่ง</span>
+                  <span className="font-medium text-gray-900 text-sm">หูฟัง Sony WH-1000XM4</span>
+                  <span className="text-xs text-blue-600 font-medium">กำลังจัดส่ง</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
                   <div className="bg-blue-500 h-1.5 rounded-full w-2/3"></div>
                 </div>
-                <p className="text-[10px] md:text-xs text-gray-500 mt-2">คาดว่าจะถึงภายใน 20 ก.ย. 2568</p>
+                <p className="text-xs text-gray-500 mt-2">คาดว่าจะถึงภายใน 20 ก.ย. 2568</p>
               </div>
             </div>
           </div>
@@ -1403,12 +1299,12 @@ const UserProfile = () => (
 );
 
 const Footer = () => (
-  <footer className="bg-white border-t border-gray-200 pt-10 pb-8 mt-8 md:mt-12 text-sm font-light">
+  <footer className="bg-white border-t border-gray-200 pt-16 pb-8 mt-12 text-sm font-light">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
         <div>
           <h4 className="font-bold text-slate-800 mb-4">SecondHome</h4>
-          <ul className="space-y-2 text-gray-500 text-xs md:text-sm">
+          <ul className="space-y-2 text-gray-500">
             <li>เกี่ยวกับเรา</li>
             <li>ร่วมงานกับเรา</li>
             <li>นโยบายความเป็นส่วนตัว</li>
@@ -1417,7 +1313,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-bold text-slate-800 mb-4">ช่วยเหลือ</h4>
-          <ul className="space-y-2 text-gray-500 text-xs md:text-sm">
+          <ul className="space-y-2 text-gray-500">
             <li>ศูนย์ช่วยเหลือ</li>
             <li>วิธีการซื้อสินค้า</li>
             <li>วิธีการลงขาย</li>
@@ -1426,7 +1322,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-bold text-slate-800 mb-4">หมวดหมู่</h4>
-          <ul className="space-y-2 text-gray-500 text-xs md:text-sm">
+          <ul className="space-y-2 text-gray-500">
             <li>มือถือ & อิเล็กทรอนิกส์</li>
             <li>แฟชั่น</li>
             <li>บ้านและสวน</li>
@@ -1452,27 +1348,27 @@ const Footer = () => (
 // --- Login Modal ---
 const LoginModal = ({ onClose, onLogin }) => (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-    <div className="bg-white rounded-2xl w-full max-w-md p-6 md:p-8 relative shadow-2xl">
+    <div className="bg-white rounded-2xl w-full max-w-md p-8 relative shadow-2xl">
       <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
         <X size={20} />
       </button>
       
-      <div className="text-center mb-6 md:mb-8">
+      <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center p-3 bg-slate-100 rounded-xl mb-4 text-slate-800">
-          <Home size={28} className="md:w-8 md:h-8" />
+          <Home size={32} />
         </div>
-        <h2 className="text-xl md:text-2xl font-bold text-slate-800">ยินดีต้อนรับกลับมา</h2>
-        <p className="text-gray-500 text-xs md:text-sm mt-1">เข้าสู่ระบบเพื่อจัดการการซื้อขายของคุณ</p>
+        <h2 className="text-2xl font-bold text-slate-800">ยินดีต้อนรับกลับมา</h2>
+        <p className="text-gray-500 text-sm mt-1">เข้าสู่ระบบเพื่อจัดการการซื้อขายของคุณ</p>
       </div>
 
-      <div className="space-y-3 md:space-y-4">
+      <div className="space-y-4">
         <button className="w-full py-2.5 border border-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-50 transition relative">
           <span className="font-bold text-blue-600 absolute left-4">G</span>
-          <span className="text-gray-700 text-xs md:text-sm font-medium">ดำเนินการต่อด้วย Google</span>
+          <span className="text-gray-700 text-sm font-medium">ดำเนินการต่อด้วย Google</span>
         </button>
         <button className="w-full py-2.5 border border-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-50 transition relative">
           <span className="font-bold text-blue-800 absolute left-4">f</span>
-          <span className="text-gray-700 text-xs md:text-sm font-medium">ดำเนินการต่อด้วย Facebook</span>
+          <span className="text-gray-700 text-sm font-medium">ดำเนินการต่อด้วย Facebook</span>
         </button>
         
         <div className="relative flex py-2 items-center">
@@ -1481,16 +1377,16 @@ const LoginModal = ({ onClose, onLogin }) => (
           <div className="flex-grow border-t border-gray-200"></div>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-3 md:space-y-4">
+        <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">อีเมล</label>
-            <input type="email" className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm" placeholder="name@example.com" />
+            <input type="email" className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500" placeholder="name@example.com" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-700 mb-1">รหัสผ่าน</label>
-            <input type="password" className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm" placeholder="••••••••" />
+            <input type="password" className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500" placeholder="••••••••" />
           </div>
-          <button type="submit" className="w-full bg-slate-800 text-white py-2.5 rounded-lg font-medium hover:bg-slate-700 transition shadow-md text-sm">
+          <button type="submit" className="w-full bg-slate-800 text-white py-2.5 rounded-lg font-medium hover:bg-slate-700 transition shadow-md">
             เข้าสู่ระบบ
           </button>
         </form>
@@ -1511,8 +1407,6 @@ export default function SecondHomeApp() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isNotiOpen, setIsNotiOpen] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -1533,6 +1427,7 @@ export default function SecondHomeApp() {
 
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
+    // Scroll to products section if needed, or stay at top
   };
 
   const handleLogin = () => {
@@ -1553,6 +1448,7 @@ export default function SecondHomeApp() {
   const addToCart = (product) => {
     const newItem = { ...product, cartId: Date.now() };
     setCartItems([...cartItems, newItem]);
+    // Optional: Show toast here
   };
 
   const removeFromCart = (cartId) => {
@@ -1598,13 +1494,6 @@ export default function SecondHomeApp() {
         onConfirm={clearCart}
       />
 
-      <MobileFilterModal 
-        isOpen={isMobileFilterOpen}
-        onClose={() => setIsMobileFilterOpen(false)}
-        selectedCategory={selectedCategory}
-        onCategoryClick={handleCategoryClick}
-      />
-
       <Navbar 
         onViewChange={(v) => { 
           if(v === 'home') handleHomeClick();
@@ -1616,22 +1505,7 @@ export default function SecondHomeApp() {
         onCartClick={() => setIsCartOpen(true)}
         onNotiClick={() => setIsNotiOpen(!isNotiOpen)}
         showNoti={isNotiOpen}
-        onSearchMobile={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
       />
-
-      {/* Mobile Search Bar Expand */}
-      {isMobileSearchOpen && (
-        <div className="md:hidden px-4 pb-4 pt-2 border-b border-gray-100 bg-white animate-fade-in">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="ค้นหาสินค้า..."
-              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm"
-            />
-            <Search className="absolute left-3 top-3 text-gray-400" size={18} />
-          </div>
-        </div>
-      )}
 
       {view === 'home' && (
         <>
@@ -1639,52 +1513,42 @@ export default function SecondHomeApp() {
             onCategoryClick={handleCategoryClick} 
             selectedCategory={selectedCategory} 
           />
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="flex">
               <FilterSidebar 
                 onCategoryClick={handleCategoryClick} 
                 selectedCategory={selectedCategory}
               />
               <div className="flex-1">
-                <div className="flex items-center justify-between mb-4 md:mb-6">
-                  <h2 className="text-base md:text-xl font-bold text-gray-900 flex items-center">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold text-gray-900 flex items-center">
                     {selectedCategory ? (
                       <>
-                        <span className="text-gray-500 font-normal mr-2 hidden md:inline">หมวดหมู่:</span> 
+                        <span className="text-gray-500 font-normal mr-2">หมวดหมู่:</span> 
                         {selectedCategory}
                         <button 
                           onClick={() => setSelectedCategory(null)}
-                          className="ml-2 md:ml-4 text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full text-gray-600 flex items-center transition"
+                          className="ml-4 text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full text-gray-600 flex items-center transition"
                         >
-                          <X size={12} className="mr-1"/> ล้าง
+                          <X size={12} className="mr-1"/> ล้างตัวกรอง
                         </button>
                       </>
                     ) : (
-                      'สินค้าแนะนำ'
+                      'สินค้าแนะนำสำหรับคุณ'
                     )}
                   </h2>
-                  <div className="flex items-center space-x-2 text-xs md:text-sm text-gray-500">
-                    {/* Mobile Filter Trigger */}
-                    <button 
-                      className="lg:hidden flex items-center px-3 py-1.5 bg-gray-100 rounded-full text-gray-700 font-medium"
-                      onClick={() => setIsMobileFilterOpen(true)}
-                    >
-                      <Filter size={14} className="mr-1" /> ตัวกรอง
-                    </button>
-
-                    <div className="hidden md:flex items-center">
-                      <span>เรียงตาม:</span>
-                      <select className="bg-transparent border-none font-medium text-slate-800 focus:ring-0 cursor-pointer text-sm">
-                        <option>ยอดนิยม</option>
-                        <option>ล่าสุด</option>
-                        <option>ราคา ต่ำ-สูง</option>
-                      </select>
-                    </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <span>เรียงตาม:</span>
+                    <select className="bg-transparent border-none font-medium text-slate-800 focus:ring-0 cursor-pointer">
+                      <option>ยอดนิยม</option>
+                      <option>ล่าสุด</option>
+                      <option>ราคา ต่ำ-สูง</option>
+                    </select>
                   </div>
                 </div>
                 
                 {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {filteredProducts.map(product => (
                       <ProductCard 
                         key={product.id} 
@@ -1694,11 +1558,11 @@ export default function SecondHomeApp() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 md:py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                    <p className="text-gray-500 text-sm">ไม่พบสินค้าในหมวดหมู่นี้</p>
+                  <div className="text-center py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                    <p className="text-gray-500">ไม่พบสินค้าในหมวดหมู่นี้</p>
                     <button 
                       onClick={() => setSelectedCategory(null)}
-                      className="mt-3 md:mt-4 text-blue-600 hover:underline text-xs md:text-sm"
+                      className="mt-4 text-blue-600 hover:underline text-sm"
                     >
                       ดูสินค้าทั้งหมด
                     </button>
@@ -1706,16 +1570,15 @@ export default function SecondHomeApp() {
                 )}
 
                 {!selectedCategory && (
-                  <div className="mt-8 md:mt-12 p-6 md:p-8 bg-blue-50 rounded-2xl flex items-center justify-between border border-blue-100">
+                  <div className="mt-12 p-8 bg-blue-50 rounded-2xl flex items-center justify-between border border-blue-100">
                     <div>
-                      <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-2">ขายของไม่ได้ใช้?</h3>
-                      <p className="text-xs md:text-base text-gray-600 mb-4">ลงขายฟรี ไม่มีค่าธรรมเนียมแรกเข้า ระบบปลอดภัย</p>
-                      <button className="bg-slate-800 text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-medium hover:bg-slate-700 transition">
+                      <h3 className="text-xl font-bold text-slate-800 mb-2">ขายของไม่ได้ใช้ แลกเป็นเงินง่ายๆ</h3>
+                      <p className="text-gray-600 mb-4">ลงขายฟรี ไม่มีค่าธรรมเนียมแรกเข้า ระบบปลอดภัย</p>
+                      <button className="bg-slate-800 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-slate-700 transition">
                         เริ่มลงขายเลย
                       </button>
                     </div>
                     <div className="hidden md:block text-8xl">📦</div>
-                    <div className="md:hidden text-5xl">📦</div>
                   </div>
                 )}
               </div>
